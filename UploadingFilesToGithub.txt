@@ -1,0 +1,215 @@
+cool git cheatsheet: https://www.maxoberberger.net/media/cheatsheet/git-cheatsheet-visual.pdf
+0. create the project repo on github.com
+1. cd into directory to upload files
+2. git init - initializes git to track this folder
+3. git add -A -- adds all (including untracked files) which will add all files of the current directory to track to the staging area
+4. git commit -m "first commit" or git commit -a - Adds a commit layer to local repo that you can return to later if necessary 
+git will recognize that everything has been saved to a new version
+5. git branch -M main 
+6. git remote add <project nickname> <project URL>.git -- (should be able to get this link from creating the repo)
+7. git push -u origin main - sends the commit to the remote specified
+
+-origin is the remote
+
+Adding in Git (2)
+----------------------------------------------------------------------
+Command	    New Files	Modified Files	Deleted Files	Description
+git add -A	   ✔️	          ✔️	              ✔️	      Stage all (new, modified, deleted) files
+git add .	     ✔️	          ✔️	              ✔️	      Stage all (new, modified, deleted) files in current folder
+git add  	     ✔️	          ✔️	              ❌	    Stage new and modified files only
+--ignore-removal .
+git add -u	  ❌	          ✔️	              ✔️	      Stage modified and deleted files only
+----------------------------------------------------------------------
+
+Long-form flags:
+git add -A is equivalent to git add --all
+git add -u is equivalent to git add --update
+
+TO REMOVE DIRECTORIES
+1.chmod -R +w <directory>
+2.rm -r <directory>
+
+TO REMOVE FILES
+1. rm <file>
+
+----------------------------------------------------------------------------
+Show the changes which have been staged
+
+git diff
+
+-Shows the changes between the working directory and the index. This shows what has been changed, but is not staged for a commit.
+
+git diff --cached
+
+-Shows the changes between the index and the HEAD (which is the last commit on this branch). This shows what has been added to the index and staged for a commit.
+
+git diff HEAD
+
+-Shows all the changes between the working directory and HEAD (which includes changes in the index). This shows all the changes since the last commit, whether or not they have been staged for commit or not.
+
+-------------------------------------------------------------------------------------
+
+git status - Checks the status of the git -> checks if there's any modifications, deletions, and new adds
+
+compares local branch to remote branch
+-------------------------------------------------------------------------------------
+Retrieve git url attatched to a directory:
+git config --get remote.origin.url
+-If you want only the remote URL, or if your are not connected to a network that can reach the remote repo
+
+git remote show origin
+-If you require full output and you are on a network that can reach the remote repo where the origin resides
+
+When using git clone (from GitHub, or any source repository for that matter) the default name for the source of the clone is "origin". Using git remote show will display the information about this remote name. The first few lines should show:
+
+C:\Users\jaredpar\VsVim> git remote show origin
+* remote origin
+  Fetch URL: git@github.com:jaredpar/VsVim.git
+  Push  URL: git@github.com:jaredpar/VsVim.git
+  HEAD branch: master
+  Remote branches:
+If you want to use the value in the script, you would use the first command listed in this answer.
+-------------------------------------------------------------------------------------
+Branches: 
+The main branch is like the release branch, collaboration can happen on sub branches before pushing to the main
+-------------------------------------------------------------------------------------
+git clone - git clone is how you get a local copy of an existing repository to work on. It's usually only used once for a given repository, unless you want to have multiple working copies of it around. (Or want to get a clean copy after messing up your local one...)
+
+fork - Forking is a concept while cloning is a process. Forking is just containing a separate copy of the repository and there is no command involved. Cloning is done through the command 'git clone' and it is a process of receiving all the code files to the local machine. Most commonly, forks are used to either propose changes to someone else's project or to use someone else's project as a starting point for your own idea.
+
+git pull - (or git fetch + git merge) is how you update that local copy with new commits from the remote repository. If you are collaborating with others, it is a command that you will run frequently.
+-------------------------------------------------------------------------------------
+-Remove files from git commit (reset commit) 
+git reset --soft HEAD^ 
+-Then reset the unwanted files
+git reset HEAD path/to/unwanted_file
+Now commit again, you can even re-use the same commit message:
+git commit -c ORIG_HEAD
+-------------------------------------------------------------------------------------
+To push the history leading to the current (detached HEAD)
+state now, use
+
+    git push origin HEAD:<name-of-remote-branch>
+
+-------------------------------------------------------------------------------------
+git show - shows the commit before pushing
+-------------------------------------------------------------------------------------
+git commit:
+It is quite simple. You need to add the changes that you want to the index first:
+
+git add file1 file2
+then
+
+git commit
+if you removed a file, the add does that. Add means "add the change" even though it is a removal.
+
+If you want to add all changes:
+
+git add -A
+The -a parameter on commit says to add all changes of tracked files and commit them. So
+
+git commit -a
+will not commit a new file you created. You must explicitly add this.
+
+The -m parameter allows you to avoid opening the editor to edit your commit message and use what you put in following the -m option:
+
+git commit -m "Use this message and don't open the editor"
+Sometimes this is not a good idea. If you just tried a merge and had conflicts, git caches a very nice message for you once you resolve the conflicts and commit. So there a git commit is better.
+
+To selectively add files, use the patch modifier on git add:
+
+git add -p
+This will now prompt you about the files. This is quite powerful as you can also specify parts of files, or alternatively edit what you want to add to the index. A git commit will only add those.
+
+If you want some gui help that is not tortoisegit (avoid windows shell integration), use git gui.
+
+-------------------------------------------------------------------------------------
+git checkout:
+It is the same as doing cd -. So you go back to the last branch. These three sequences do the same, if you start from master:
+
+# Way 1
+git checkout mybranch
+git checkout master
+
+# Way 2 (same result)
+git checkout mybranch
+git checkout -
+
+# Way 3 (same result)
+git checkout mybranch
+git checkout @{-1}
+As chepner mentioned, you can go back to the nth previously checked out branch by using @{-N}
+-------------------------------------------------------------------------------------
+How do you revert all local changes in Git managed project to previous state:
+
+If you want to revert changes made to your working copy, do this:
+
+git checkout .
+If you want to revert changes made to the index (i.e., that you have added), do this. Warning this will reset all of your unpushed commits to master!:
+
+git reset
+If you want to revert a change that you have committed, do this:
+
+git revert <commit 1> <commit 2>
+If you want to remove untracked files (e.g., new files, generated files):
+
+git clean -f
+Or untracked directories (e.g., new or automatically generated directories):
+
+git clean -fd
+-------------------------------------------------------------------------------------
+Branch Deletion:
+Executive Summary
+$ git push -d <remote_name> <branch_name>
+$ git branch -d <branch_name>
+Note that in most cases the remote name is origin. In such a case you'll have to use the command like so.
+
+$ git push -d origin <branch_name>
+Delete Local Branch
+To delete the local branch use one of the following:
+
+$ git branch -d branch_name
+$ git branch -D branch_name
+Note: The -d option is an alias for --delete, which only deletes the branch if it has already been fully merged in its upstream branch. You could also use -D, which is an alias for --delete --force, which deletes the branch "irrespective of its merged status." [Source: man git-branch]
+Also note that git branch -d branch_name will fail if you are currently in the branch you want to remove. The message starts with error: Cannot delete the branch 'branch_name'. If so, first switch to some other branch, for example: git checkout main.
+
+Delete Remote Branch [Updated on 8-Sep-2017]
+As of Git v1.7.0, you can delete a remote branch using
+
+$ git push <remote_name> --delete <branch_name>
+which might be easier to remember than
+
+$ git push <remote_name> :<branch_name>
+which was added in Git v1.5.0 "to delete a remote branch or a tag."
+
+Starting on Git v2.8.0 you can also use git push with the -d option as an alias for --delete.
+
+Therefore, the version of Git you have installed will dictate whether you need to use the easier or harder syntax.
+
+Delete Remote Branch [Original Answer from 5-Jan-2010]
+From Chapter 3 of Pro Git by Scott Chacon:
+
+Deleting Remote Branches
+Suppose you’re done with a remote branch — say, you and your collaborators are finished with a feature and have merged it into your remote’s main branch (or whatever branch your stable code-line is in). You can delete a remote branch using the rather obtuse syntax git push [remotename] :[branch]. If you want to delete your server-fix branch from the server, you run the following:
+
+$ git push origin :serverfix
+To git@github.com:schacon/simplegit.git
+ - [deleted]         serverfix
+Boom. No more branches on your server. You may want to dog-ear this page, because you’ll need that command, and you’ll likely forget the syntax. A way to remember this command is by recalling the git push [remotename] [localbranch]:[remotebranch] syntax that we went over a bit earlier. If you leave off the [localbranch] portion, then you’re basically saying, “Take nothing on my side and make it be [remotebranch].”
+
+I issued git push origin: bugfix and it worked beautifully. Scott Chacon was right—I will want to dog ear that page (or virtually dog ear by answering this on Stack Overflow).
+
+Then you should execute this on other machines
+
+# Fetch changes from all remotes and locally delete 
+# remote deleted branches/tags etc
+# --prune will do the job :-;
+git fetch --all --prune
+to propagate changes.
+-------------------------------------------------------------------------------------
+Why use 'git rm' to remove a file instead of 'rm'?
+
+If you just use rm, you will need to follow it up with git add <fileRemoved>. git rm does this in one step.
+
+You can also use git rm --cached which will remove the file from the index (staging it for deletion on the next commit), but keep your copy in the local file system.
+-------------------------------------------------------------------------------------
