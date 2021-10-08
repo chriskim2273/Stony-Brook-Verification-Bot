@@ -14,7 +14,7 @@ import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
 
 public class MongoDB {
-	private static String password = "pokemon227";
+	private static String password = "";
 	
 	public static String uri = "mongodb+srv://eucliduser:" + password + "@euclidbot.qvjvz.mongodb.net/<dbname>?retryWrites=true&w=majority";
 	public static MongoClientURI clientURI = new MongoClientURI(uri);
