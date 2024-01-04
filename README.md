@@ -63,4 +63,4 @@ You have to mention the role and you can mention multiple.
 ****(MAKE SURE TO MAKE THE BOT'S ROLE HIGHER/ABOVE THE ROLES YOU WANT IT TO ASSIGN, OTHERWISE, IT WON'T CAUSE IT CAN'T!)****
 ## Discord Bot Invite
 
-*The bot is currently under re-development... When it is finished, the `readme.md` will be updated with the invite link.*
+*The bot is currently not being hosted... There are plans for re-development for increased security.*
