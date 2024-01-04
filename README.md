@@ -1,12 +1,18 @@
-
-![Logo](https://preview.redd.it/iofsg3xko3s71.png?width=295&format=png&auto=webp&v=enabled&s=faa24c943ce7fcfcabf29ca261cdcfa5a0b4520f)
-
+<div align="center">
+<img src="https://preview.redd.it/iofsg3xko3s71.png?width=295&format=png&auto=webp&v=enabled&s=faa24c943ce7fcfcabf29ca261cdcfa5a0b4520f" alt="shields">
 
 # Stony Brook University Verification Discord Bot
 
+A discord bot made in Java (using JDA) that verifies if a user is a student at stony brook using their provided StonyBrook email address.
+
+# Why?
 With the increasing popularity of the Discord messaging platform for students, I thought it may be neccessary to create a bot that can filter out actual students from those posing as them to improve safety and civility in academic servers. This is a discord bot that I created that can be used to verify if a person attends `Stony Brook University` using their email. I used MongoDB to store the data, Google SMTP to send the pin code, and Discord JDA API for the bot itself.
 
 This can me modified to be utilized for other school emails and I am considering making it flexible for any university or email.
+
+<img src="https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&amp;logo=java&amp;logoColor=white" alt="shields">
+
+</div>
 
 ## Authors
 
